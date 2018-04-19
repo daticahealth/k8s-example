@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    component: {{deployment_name}}
+  name: {{deployment_name}}
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: {{deployment_name}}
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        component: {{deployment_name}}
+    spec:
+      containers:
+      - env:
+        - name: FOO
+          value: BAR
+        image: {{deployment_image}}
+        imagePullPolicy: Always
+        name: {{deployment_name}}
+        ports:
+        - containerPort: 80
+          name: http
+        resources: {}
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
