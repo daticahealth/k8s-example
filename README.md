@@ -9,7 +9,7 @@ kubectl -n ingress-nginx get svc/ingress-nginx -o wide
 
 The template.sh script can be used to generate valid kubernetes YAML off of the provided templates. The new YAML files will be located at ./{{deployment_name}}/
 ```sh
-./template.sh --deployment hello --namespace default --image nginxdemos/hello --port 1234 --hostname hello.datica.com
+./template.sh --deployment hello --namespace default --image nginxdemos/hello --port 1234 --hostname my.cname.com
 ```
 
 Use the following command to generate self-signed certificates for development:
@@ -20,12 +20,13 @@ openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 36
 To create the deployment simply run:
 ```sh
 kubectl -n {{deployment_namespace}} create secret tls {{deployment_name}}-tls --cert=path/to/cert.pem --key=path/to/key.pem
-kubectl create -f ./{{deployment_name}}/deployment.yaml
-kubeclt create -f ./{{deployment_name}}/service.yaml
-kubectl create -f ./{{deployment_name}}/ingress.yaml
+cd ./{{deployment_name}}
+kubectl apply -f ./deployment.yaml
+kubeclt apply -f ./service.yaml
+kubectl apply -f ./ingress.yaml
 ```
 
-You should be able to hit your deployment with:
+You should be able to reach your deployment with:
 ```sh
 curl -k https://{{host_name}}
 ```
