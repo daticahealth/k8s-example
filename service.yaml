@@ -2,13 +2,13 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{deployment_name}}
-  namespace: default
+  namespace: {{deployment_namespace}}
   labels:
     component: {{deployment_name}}
 spec:
   selector:
     component: {{deployment_name}}
   ports:
-  - name: http
-    port: 80
-    targetPort: http
+  - name: {{port_name}}
+    port: {{service_port}}
+    targetPort: {{port_name}}

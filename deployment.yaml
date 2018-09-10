@@ -4,7 +4,7 @@ metadata:
   labels:
     component: {{deployment_name}}
   name: {{deployment_name}}
-  namespace: default
+  namespace: {{deployment_namespace}}
 spec:
   replicas: 1
   selector:
@@ -28,10 +28,6 @@ spec:
         imagePullPolicy: Always
         name: {{deployment_name}}
         ports:
-        - containerPort: 80
-          name: http
-        resources: {}
+        - containerPort: {{container_port}}
+          name: {{port_name}}
       restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
