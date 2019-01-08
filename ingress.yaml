@@ -11,7 +11,7 @@ spec:
   tls:
   - hosts:
     - {{host_name}}
-  - secretName: {{deployment_name}}-tls
+    secretName: {{deployment_name}}-tls
   rules:
   - host: "{{host_name}}"
     http:
