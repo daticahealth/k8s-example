@@ -16,16 +16,15 @@ The template.sh script can be used to generate valid kubernetes YAML off of the 
 
 Use the following command to generate self-signed certificates for development:
 ```sh
-openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365
+./certs.sh --deployment hello --hostname my.cname.com
 ```
 
 To create the deployment, run:
 ```sh
-kubectl -n {{deployment_namespace}} create secret tls {{deployment_name}}-tls --cert=path/to/cert.pem --key=path/to/key.pem
-cd ./{{deployment_name}}
-kubectl apply -f ./deployment.yaml
-kubeclt apply -f ./service.yaml
-kubectl apply -f ./ingress.yaml
+kubectl -n {{deployment_namespace}} create secret tls {{deployment_name}}-tls --cert=./hello/example.pem --key=./hello/example-key.pem
+kubectl apply -f ./hello/deployment.yaml
+kubeclt apply -f ./hello/service.yaml
+kubectl apply -f ./hello/ingress.yaml
 ```
 
 You should be able to reach your deployment with:
