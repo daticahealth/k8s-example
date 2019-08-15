@@ -50,7 +50,7 @@ while [ "$1" ]; do
                             ;;
     --hostname )
                             shift
-                            HOSTNAME=$1
+                            INGRESS_HOSTNAME=$1
                             ;;
     -h | --help )
                             usage
@@ -63,7 +63,7 @@ while [ "$1" ]; do
   shift
 done
 
-if [ ! "$DEPLOYMENT_NAME" ] || [ ! "$NAMESPACE" ] || [ ! "$IMAGE" ] || [ ! "$PORT" ] || [ ! "$HOSTNAME" ]; then
+if [ ! "$DEPLOYMENT_NAME" ] || [ ! "$NAMESPACE" ] || [ ! "$IMAGE" ] || [ ! "$PORT" ] || [ ! "$INGRESS_HOSTNAME" ]; then
   echo "Error: Missing required arguments"
   usage 1
 fi
@@ -76,7 +76,7 @@ template() {
     sed s,{{service_port}},"$PORT",g | \
     sed s,{{container_port}},"$CONTAINER_PORT",g | \
     sed s,{{port_name}},"$PORT_NAME",g | \
-    sed s,{{host_name}},"$HOSTNAME",g
+    sed s,{{host_name}},"$INGRESS_HOSTNAME",g
 }
 
 mkdir ${DEPLOYMENT_NAME} &>/dev/null || true 

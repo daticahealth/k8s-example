@@ -21,9 +21,9 @@ Use the following command to generate self-signed certificates for development:
 
 To create the deployment, run:
 ```sh
-kubectl -n {{deployment_namespace}} create secret tls {{deployment_name}}-tls --cert=./hello/cert.pem --key=./hello/key.pem
+kubectl -n default create secret tls hello-tls --cert=./hello/cert.pem --key=./hello/key.pem
 kubectl apply -f ./hello/deployment.yaml
-kubeclt apply -f ./hello/service.yaml
+kubectl apply -f ./hello/service.yaml
 kubectl apply -f ./hello/ingress.yaml
 ```
 
