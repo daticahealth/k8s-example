@@ -21,13 +21,16 @@ spec:
         component: {{deployment_name}}
     spec:
       containers:
-      - env:
-        - name: FOO
-          value: BAR
+      - name: {{deployment_name}}
         image: {{deployment_image}}
         imagePullPolicy: Always
-        name: {{deployment_name}}
+        env:
+          - name: FOO
+            value: BAR
         ports:
-        - containerPort: {{container_port}}
-          name: {{port_name}}
+          - containerPort: {{container_port}}
+            name: {{port_name}}
+      serviceAccountName: {{deployment_name}}
       restartPolicy: Always
+      securityContext:
+        runAsUser: 101
