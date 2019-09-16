@@ -1,0 +1,38 @@
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{deployment_name}}
+  namespace: {{deployment_namespace}}
+  labels:
+    component: {{deployment_name}}
+rules:
+  - apiGroups: ['policy']
+    resources: ['podsecuritypolicies']
+    verbs:     ['use']
+    resourceNames:
+    - example-psp
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{deployment_name}}
+  namespace: {{deployment_namespace}}
+  labels:
+    component: {{deployment_name}}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{deployment_name}}
+subjects:
+- kind: ServiceAccount
+  name: {{deployment_name}}
+  namespace: {{deployment_namespace}}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{deployment_name}}
+  namespace: {{deployment_namespace}}
+  labels:
+    component: {{deployment_name}}

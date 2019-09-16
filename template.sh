@@ -20,7 +20,7 @@ usage() {
   exit ${1:-0}
 }
 
-CONTAINER_PORT=80
+CONTAINER_PORT=8080
 PORT_NAME=http
 while [ "$1" ]; do
   case $1 in
@@ -81,8 +81,10 @@ template() {
 
 mkdir ${DEPLOYMENT_NAME} &>/dev/null || true 
 DIRNAME=$(dirname $0)
+template ${DIRNAME}/templates/role.yaml > ${DEPLOYMENT_NAME}/role.yaml
+template ${DIRNAME}/templates/pod-security-policy.yaml > ${DEPLOYMENT_NAME}/pod-security-policy.yaml
 template ${DIRNAME}/templates/deployment.yaml > ${DEPLOYMENT_NAME}/deployment.yaml
 template ${DIRNAME}/templates/service.yaml > ${DEPLOYMENT_NAME}/service.yaml
 template ${DIRNAME}/templates/ingress.yaml > ${DEPLOYMENT_NAME}/ingress.yaml
 
-echo -e "K8s yaml created:\n  ${DEPLOYMENT_NAME}/deployment.yaml\n  ${DEPLOYMENT_NAME}/service.yaml\n  ${DEPLOYMENT_NAME}/ingress.yaml"
+echo -e "K8s yaml created:\n  ${DEPLOYMENT_NAME}/pod-security-policy.yaml\n  ${DEPLOYMENT_NAME}/role.yaml\n  ${DEPLOYMENT_NAME}/deployment.yaml\n  ${DEPLOYMENT_NAME}/service.yaml\n  ${DEPLOYMENT_NAME}/ingress.yaml"

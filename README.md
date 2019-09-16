@@ -11,7 +11,7 @@ kubectl -n ingress-nginx get svc/ingress-nginx -o wide
 
 The template.sh script can be used to generate valid kubernetes YAML off of the provided templates. The new YAML files will be located at ./{{deployment_name}}/
 ```sh
-./template.sh --deployment hello --namespace default --image nginxdemos/hello --port 1234 --hostname my.cname.com
+./template.sh --deployment hello --namespace default --image datica/nginx-hello:latest --port 1234 --hostname my.cname.com
 ```
 
 Use the following command to generate self-signed certificates for development:
